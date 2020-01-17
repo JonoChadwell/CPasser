@@ -1,0 +1,10 @@
+cpasser_module/.cpasser.ko.cmd
+cpasser_module/.cpasser.mod.o.cmd
+cpasser_module/.cpasser.o.cmd
+cpasser_module/.tmp_versions
+cpasser_module/Module.symvers
+cpasser_module/cpasser.ko
+cpasser_module/cpasser.mod.c
+cpasser_module/cpasser.mod.o
+cpasser_module/cpasser.o
+cpasser_module/modules.order

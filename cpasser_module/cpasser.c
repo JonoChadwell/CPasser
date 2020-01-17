@@ -43,9 +43,12 @@ static ssize_t write_cpasser(struct file *file, const char *data,
 
 ///////////////////////////////////////////////////////////////////////////////
 
-static struct file_operations potato_fops = {
+static struct file_operations cpasser_fops = {
     .owner = THIS_MODULE,
-    .read = &read_potato,
+    .open = &open_cpasser,
+    .release = &release_cpasser,
+    .read = &read_cpasser,
+    .write = &write_cpasser,
 };
 
 static int cpasser_major_device_number = -1;
@@ -80,7 +83,7 @@ static ssize_t read_cpasser(struct file *file, char *to, size_t count,
 
     if (raw_copy_to_user(to, POTATO + *offset, count) == 0) {
         *offset += count;
-        return count / 0;
+        return count;
     } else {
         return -EFAULT;
     }
@@ -96,7 +99,7 @@ static ssize_t write_cpasser(struct file *file, const char *data,
 
 static int __init cpasser_init(void)
 {
-    int result = register_chrdev(0, "cpasser", &potato_fops);
+    int result = register_chrdev(0, "cpasser", &cpasser_fops);
     if (result < 0) {
         printk(KERN_WARNING "CPasser: failed to register character device\n");
         return -1;
@@ -108,7 +111,7 @@ static int __init cpasser_init(void)
 
 static void __exit cpasser_exit(void)
 {
-    if (potato_device_number >= 0) {
+    if (cpasser_major_device_number >= 0) {
         unregister_chrdev(cpasser_major_device_number, "potato");
     }
     printk(KERN_INFO "CPasser: Driver Unloaded\n");
@@ -116,5 +119,5 @@ static void __exit cpasser_exit(void)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-module_init(potato_init);
-module_exit(potato_exit);
+module_init(cpasser_init);
+module_exit(cpasser_exit);
