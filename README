@@ -1,0 +1,2 @@
+CPasser is a linux kernel module that implements a message passing system that
+linux applications can use by reading from or writing to a special device file.
